@@ -1,0 +1,42 @@
+{
+  "entities": {
+    "Message": {
+      "title": "Chat Message",
+      "description": "A single message in a chat session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sender": { "type": "string", "enum": ["user", "zoya"] },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["sender", "text", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User preferences and shared identity",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "isMuted": { "type": "boolean" },
+            "theme": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile and settings"
+    },
+    "/users/{userId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Individual chat messages for the user"
+    }
+  }
+}
